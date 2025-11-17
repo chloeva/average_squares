@@ -51,7 +51,7 @@ def convert_numbers(list_of_strings):
 
 
 if __name__ == "__main__":
-    #OLD CODE
+    
     numbers_strings = ["1","2","4"]
     weight_strings = ["1","1","1"]        
     
@@ -61,18 +61,28 @@ if __name__ == "__main__":
     result = average_of_squares(numbers, weights)
     
     print(result)
-
+    
+    #adding new code
     parser = argparse.ArgumentParser(description="Compute squares of given number")
+    # Positional numbers
     parser.add_argument(
         "numbers",
         type=float,
         nargs="+",
         help="A list of number to process."
     )
+
+    # Optional weights
+    parser.add_argument(
+        "--weights",
+        type=float,
+        nargs="*",
+        help="Optional list of weights to multiply with the squared values"
+    )
     args = parser.parse_args()
 
     numbers = args.numbers
-    weights = None
+    weights = args.weights
 
     result = average_of_squares(numbers, weights)
     print(result)
