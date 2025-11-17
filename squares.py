@@ -1,6 +1,12 @@
 """Computation of weighted average of squares."""
 import argparse
 
+def read_numbers_from_file(filename):
+    with open(filename, "r") as f:
+        text =f.read().strip()
+    parts = text.split()
+    return [float(x) for x in parts]
+
 def average_of_squares(list_of_numbers, list_of_weights=None):
     """ Return the weighted average of a list of values.
     
@@ -50,8 +56,9 @@ def convert_numbers(list_of_strings):
     return [float(number_string) for number_string in all_numbers]
 
 
+
 if __name__ == "__main__":
-    #OLD CODE
+
     numbers_strings = ["1","2","4"]
     weight_strings = ["1","1","1"]        
     
@@ -64,15 +71,25 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Compute squares of given number")
     parser.add_argument(
-        "numbers",
-        type=float,
-        nargs="+",
-        help="A list of number to process."
+        "file_numbers",
+        type=str,
+        help="Text file containing numbers seperated by spaces."
+    )
+
+    # Optional weights
+    parser.add_argument(
+        "--weights",
+        type=str,
+        help="Text file containing weights seperated by spaces"
     )
     args = parser.parse_args()
 
-    numbers = args.numbers
-    weights = None
+    number = read_numbers_from_file(args.file_numbers)
+
+    if args.weights:
+        weights = read_numbers_from_file(args.weights)
+    else:
+        weights = None
 
     result = average_of_squares(numbers, weights)
     print(result)
